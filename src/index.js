@@ -10,11 +10,8 @@ class Parent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-                data: [1,2,3]
+                data: ['alpha', 'beta', 'gamma']
         };
-        console.log('before ', this.props.value);
-        store.dispatch({ type: 'INCREMENT' });
-        console.log('after ', store.getState());
     }
 
     render() {
@@ -29,8 +26,22 @@ class Parent extends React.Component {
     }
 }
 
-ReactDOM.render(<Parent value={store.getState()}>
-                    <span>One</span>
-                    <span>Two</span>
-                    <span>Three</span>
+class Child extends React.Component {
+    constructor(props) {
+        super(props);
+        store.dispatch({ type: 'INCREMENT'});
+        this.val = store.getState();
+    }
+
+    render() {
+        return (
+            <div>{this.props.name} {this.val}</div>
+        );
+    }
+}
+
+ReactDOM.render(<Parent>
+                    <Child name="One"/>
+                    <Child name="Two"/>
+                    <Child name="Three"/>
                 </Parent>, document.getElementById('root'));
